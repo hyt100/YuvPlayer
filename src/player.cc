@@ -96,6 +96,7 @@ int main(int argc, char *argv[])
     // 2. 初始化SDL
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_TIMER);
     window = SDL_CreateWindow("YuvPlayer", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screen_width, screen_height, SDL_WINDOW_SHOWN);
+    // 如果要将视频播放嵌入式到MFC/QT等的窗口中，可参考使用SDL_CreateWindowFrom接口
     if (!window) {
         cout << "SDL_CreateWindow faild: " << SDL_GetError() << endl;
         goto OUT;
@@ -176,7 +177,12 @@ OUT:
         SDL_DestroyRenderer(renderer);
     if (window)
         SDL_DestroyWindow(window);
+    SDL_Quit();
     delete[] frame;
     fclose(f);
     return 0;
 }
+
+// 总结：
+//   1. 目前测试发现视频的渲染必须放在主线程中，在子线程中渲染图像出不来；
+// 
