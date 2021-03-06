@@ -185,4 +185,8 @@ OUT:
 
 // 总结：
 //   1. 目前测试发现视频的渲染必须放在主线程中，在子线程中渲染图像出不来；
-// 
+//   2. 画矩形框（SDL2没有提供画笔大小接口，默认的宽度应该时1个像素，如果要画粗一点的边框，只能挨着多画几次？）
+//            SDL_Rect myrect = {100, 100, 100, 100};
+//            SDL_SetRenderDrawColor(renderer, 0, 255, 0, 0); // 设置画笔颜色
+//            SDL_RenderDrawRect(renderer, &myrect);          // 画矩形框
+//            SDL_RenderPresent(renderer);                    // 执行渲染
