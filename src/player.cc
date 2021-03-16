@@ -155,8 +155,9 @@ int main(int argc, char *argv[])
             }
             // 将YUV更新到纹理上
             // 这里没有填充，pitch(即stride)和width相等
-            // 注意pixels数据的Y/U/V应为连续内存区域，否则可改用 SDL_UpdateYUVTexture 分别指定Y/U/V的plane和pitch
-            // SDL_UpdateYUVTexture仅支持YV12 or IYUV两种像素格式.
+            // SDL_UpdateTexture适用于单个plane，或者，多plane且每个plane的stride均一样；
+            // 否则，应采用 SDL_UpdateYUVTexture 分别指定Y/U/V的plane和pitch。
+            // SDL_UpdateYUVTexture可用于YV12 or IYUV两种像素格式.
             SDL_UpdateTexture(texture, NULL, frame, width);
 
             SDL_Rect rect = {0, 0, width, height};
